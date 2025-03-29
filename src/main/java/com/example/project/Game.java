@@ -103,18 +103,64 @@ public class Game{
     }
 
     public void initialize(){ //to test, create a player, trophy, grid, treasure, and enemies. Then call placeSprite() to put them on the grid
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Choose dificulty:\n1. Easy\n2. Medium\n3. May Occassionally be Impossible");
+        int input = scan.nextInt();
+
+        if (input == 1) {
+            size = 4;
+            enemies = new Enemy[2];
+            treasures = new Treasure[1];
+
+
+        } else if (input == 2) {
+            size = 8;
+            enemies = new Enemy[12];
+            treasures = new Treasure[4];
+
+
+        } else if (input == 3) {
+            size = 10;
+            enemies = new Enemy[32];
+            treasures = new Treasure[32];
+
+        }
+
         grid = new Grid(size);
         player = new Player(0, 0);
-
-        enemies = new Enemy[2];
-        treasures = new Treasure[1];
-
-        grid.placeSprite(new Enemy(1, 0));
-        grid.placeSprite(new Enemy(2, 0));
         grid.placeSprite(player);
-        grid.placeSprite(new Treasure(3, 2));
-        grid.placeSprite(new Trophy(size - 1, size - 1));
-   
+        
+        trophy = new Trophy(size - 1, size - 1);
+        grid.placeSprite(trophy);
+
+        for (int i = 0; i < enemies.length; i++) {
+            int randX = 0;
+            int randY = 0;
+
+            while(!(grid.getGrid()[size - 1 - randY][randX] instanceof Dot)){
+                randX = (int)(Math.random() * size);
+                randY = (int)(Math.random() * size);
+            }
+
+            Enemy newEnemy = new Enemy(randX, randY);
+            grid.placeSprite(newEnemy);
+            enemies[i] = newEnemy;
+
+        }
+
+        for(int i = 0; i < treasures.length; i++){
+            int randX = 0;
+            int randY = 0;
+
+            while(!(grid.getGrid()[size - 1 - randY][randX] instanceof Dot)){
+                randX = (int)(Math.random() * size);
+                randY = (int)(Math.random() * size);
+            }
+            
+            Treasure newTreasure = new Treasure(randX, randY);
+            grid.placeSprite(newTreasure);
+            treasures[i] = newTreasure;
+        } 
     }
 
     public static void main(String[] args) {
