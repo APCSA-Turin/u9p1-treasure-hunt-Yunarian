@@ -73,7 +73,7 @@ public class Game{
                 // if the player is not trying to move onto the trophy with an insufficient number of treasures
                 if ((player.getTreasureCount() == treasures.length || !(grid.getGrid()[size - 1 - movedTo.getY()][movedTo.getX()] instanceof Trophy)))  {
                     player.move(temp);
-                    
+                    grid.placeSprite(player, temp);
                 }
 
                 
@@ -91,12 +91,14 @@ public class Game{
                     }
                     System.out.println("Play again? (y/n)");
                     gameRun = scanner.nextLine().equals("y");
+                    if (gameRun) {
+                        initialize();
+                    }
                 }
                 
             }
             
-
-            grid.placeSprite(player, temp);
+            
             }
             
      
@@ -114,8 +116,8 @@ public class Game{
 
 
         } else if (input == 2) {
-            size = 8;
-            enemies = new Enemy[12];
+            size = 7;
+            enemies = new Enemy[16];
             treasures = new Treasure[4];
 
 
