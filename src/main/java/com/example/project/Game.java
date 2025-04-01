@@ -53,6 +53,7 @@ public class Game{
             String temp = scanner.nextLine(); // checking for inputs for player movement
             // if the move trying to be made is valid
             if (player.isValid(size, temp)) {
+
                 // changes the position of movedTo based on the input
                 if (temp.equals("w")) {
                     movedTo.setY(movedTo.getY() + 1);
@@ -80,47 +81,49 @@ public class Game{
                 if (player.getLives() <= 0 || player.getWin()) {
                     // when the player wins or loses, clear the screen.
                     clearScreen();
-                    if (player.getLives() <= 0) {
+                    if (player.getLives() <= 0) { // Player losing output
                         grid.gameover();
                         System.out.println("You lost...");
 
-                    } else {
-                        grid.win();
+                    } else { // Player winning output
+                        grid.win(); 
                         System.out.println("You won!!!");
 
                     }
+                    // if the player wants to play again
                     System.out.println("Play again? (y/n)");
                     gameRun = scanner.nextLine().equals("y");
+
+                    // to restart the game
                     if (gameRun) {
                         initialize();
                     }
                 }
-                
             }
-            
-            
             }
-            
-     
     }
 
     public void initialize(){ //to test, create a player, trophy, grid, treasure, and enemies. Then call placeSprite() to put them on the grid
+        // dificulty setting input
         Scanner scan = new Scanner(System.in);
         System.out.println("Choose dificulty:\n1. Easy\n2. Medium\n3. May Occassionally be Impossible");
         int input = scan.nextInt();
 
+        // Easy dificulty
         if (input == 1) {
             size = 4;
             enemies = new Enemy[2];
             treasures = new Treasure[1];
 
 
+        // Medium dificulty
         } else if (input == 2) {
             size = 7;
             enemies = new Enemy[16];
             treasures = new Treasure[4];
 
 
+        // May Occassionally be Impossible dificulty
         } else if (input == 3) {
             size = 10;
             enemies = new Enemy[32];
@@ -128,37 +131,44 @@ public class Game{
 
         }
 
+        // initialize the grid, player, and trophy.
+        // player i in the botom left; trophy is in the top right
         grid = new Grid(size);
         player = new Player(0, 0);
         grid.placeSprite(player);
-        
         trophy = new Trophy(size - 1, size - 1);
         grid.placeSprite(trophy);
 
+        // for every enemy
         for (int i = 0; i < enemies.length; i++) {
             int randX = 0;
             int randY = 0;
 
-            while(!(grid.getGrid()[size - 1 - randY][randX] instanceof Dot)){
+            // generates a random X and Y value of a spot in grid with Dot
+            while (!(grid.getGrid()[size - 1 - randY][randX] instanceof Dot)){
                 randX = (int)(Math.random() * size);
                 randY = (int)(Math.random() * size);
             }
 
+            // then place the enemy at that spot
             Enemy newEnemy = new Enemy(randX, randY);
             grid.placeSprite(newEnemy);
             enemies[i] = newEnemy;
 
         }
 
-        for(int i = 0; i < treasures.length; i++){
+        // for every treasure
+        for (int i = 0; i < treasures.length; i++){
             int randX = 0;
             int randY = 0;
 
-            while(!(grid.getGrid()[size - 1 - randY][randX] instanceof Dot)){
+            // generates a random X and Y value of a spot in grid with Dot
+            while (!(grid.getGrid()[size - 1 - randY][randX] instanceof Dot)){
                 randX = (int)(Math.random() * size);
                 randY = (int)(Math.random() * size);
             }
             
+            // then places the treasure there
             Treasure newTreasure = new Treasure(randX, randY);
             grid.placeSprite(newTreasure);
             treasures[i] = newTreasure;

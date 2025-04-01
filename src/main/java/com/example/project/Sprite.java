@@ -8,7 +8,7 @@ public class Sprite {
         this.y = y;
     }
 
-    public int getX(){return x;}//placeholder
+    public int getX(){return x;}
     public int getY(){return y;}
 
     public void setX(int newX){x = newX;}

@@ -81,6 +81,8 @@ public class Grid{
     }
     
     public void gameover(){ //use this method to display a loss
+        // when the player loses, display every non player object as ‼️
+        // and the player object as 🔰
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 if (!(grid[row][col] instanceof Player)) {
@@ -95,6 +97,8 @@ public class Grid{
     }
 
     public void win(){ //use this method to display a win 
+        // when the player wins, display every non player object as 🌟
+        // and the player object as 🐲
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 if (!(grid[row][col] instanceof Player)) {

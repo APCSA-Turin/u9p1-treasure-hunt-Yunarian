@@ -36,13 +36,20 @@ public class Player extends Sprite{
 
     public void interact(int size, String direction, int numTreasures, Object obj) { // interact with an object in the position you are moving to 
         // numTreasures is the number of treasures which the game started with.
+        // if the move is valid
         if (isValid(size, direction)) {
+            // if the tile it is trying to move to is an enemy,
+            // lose a life.
             if (obj instanceof Enemy) {
                 numLives--;
 
+            // if the object is jus a treasure, 
+            // increase treasureCount by 1
             } else if (obj instanceof Treasure && !(obj instanceof Trophy)) {
                 treasureCount++;
 
+            // if the object is a trophy, and the player has collected all the treasures,
+            // the player wins the game.
             } else if (obj instanceof Trophy && treasureCount == numTreasures) {
                 win = true;
 
@@ -50,8 +57,10 @@ public class Player extends Sprite{
         }
     }
 
-
+    // if the move is trying to move the player out of bounds, false is returned
+    // true is returned otherwise.
     public boolean isValid(int size, String direction){ //check grid boundaries
+
         if (getY() == size - 1 && direction.equals("w")) {
             return false;
 
@@ -68,6 +77,9 @@ public class Player extends Sprite{
         return true;
     }
 
+
+    // Overriden versions of methods in Sprite
+    // Returns "Player: " + what the same method in Sprite would return.
     @Override
     public String getRowCol(int size){
         return "Player:" + super.getRowCol(size);
